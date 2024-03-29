@@ -90,6 +90,7 @@ namespace Demo.PL.Controllers
             }
             return View(departmentVM);
         }
+        //dfsfasfdf
         public IActionResult Delete(int? id)
         {
             return Details(id, "Delete");
@@ -114,6 +115,7 @@ namespace Demo.PL.Controllers
 
 
             return View(departmentVM);
+            //Fix 
         }
     }
 }
