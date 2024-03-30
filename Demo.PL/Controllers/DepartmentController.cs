@@ -95,7 +95,7 @@ namespace Demo.PL.Controllers
         {
             return Details(id, "Delete");
         }
-        [HttpPost]
+        [HttpPost] 
         public IActionResult Delete(DepartmentViewModel departmentVM, [FromRoute] int id)
         {
             if (id != departmentVM.Id)
