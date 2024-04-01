@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Demo.PL.Controllers
 {
@@ -19,9 +20,9 @@ namespace Demo.PL.Controllers
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var departments = _unitOfWork.DepartmentRepository.GetAll();
+            var departments = await _unitOfWork.DepartmentRepository.GetAllAsync();
             var MappedDepartment = _mapper.Map<IEnumerable<DepartmentViewModel>>(departments);
             return View(MappedDepartment);
         }
@@ -31,13 +32,13 @@ namespace Demo.PL.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(DepartmentViewModel departmentVM)
+        public async Task<IActionResult> Create(DepartmentViewModel departmentVM)
         {
             if (ModelState.IsValid)
             {
                 var MappedDepartment = _mapper.Map<DepartmentViewModel, Department>(departmentVM);
-                _unitOfWork.DepartmentRepository.Add(MappedDepartment);
-                int result = _unitOfWork.Complete();
+                await _unitOfWork.DepartmentRepository.AddAsync(MappedDepartment);
+                int result = await _unitOfWork.CompleteAsync();
                 if (result > 0)
                     TempData["message"] = "New Department Created";
 
@@ -45,12 +46,12 @@ namespace Demo.PL.Controllers
             }
             return View(departmentVM);
         }
-        public IActionResult Details(int? id, string ViewName = "Details")
+        public async Task<IActionResult> Details(int? id, string ViewName = "Details")
         {
             if (id is null)
                 return BadRequest();
 
-            var department = _unitOfWork.DepartmentRepository.GetById(id.Value);
+            var department = await _unitOfWork.DepartmentRepository.GetByIdAsync(id.Value);
             if (department is null)
                 return NotFound();
             var MappedDepartment = _mapper.Map<Department, DepartmentViewModel>(department);
@@ -58,18 +59,12 @@ namespace Demo.PL.Controllers
             return View(ViewName, MappedDepartment);
         }
 
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            //if (id is null)
-            //    return BadRequest();
-            //var department = _departmentRepository.GetById(id.Value);
-            //if (department is null)
-            //    return NotFound();
-            //return View(department);
-            return Details(id, "Edit");
+            return await Details(id, "Edit");
         }
         [HttpPost]
-        public IActionResult Edit(DepartmentViewModel departmentVM, [FromRoute] int id)
+        public async Task<IActionResult> Edit(DepartmentViewModel departmentVM, [FromRoute] int id)
         {
             if (id != departmentVM.Id)
                 return BadRequest();
@@ -79,7 +74,7 @@ namespace Demo.PL.Controllers
                 {
                     var MappedDepartment = _mapper.Map<DepartmentViewModel, Department>(departmentVM);
                     _unitOfWork.DepartmentRepository.Update(MappedDepartment);
-                    _unitOfWork.Complete();
+                    await _unitOfWork.CompleteAsync();
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
@@ -89,14 +84,13 @@ namespace Demo.PL.Controllers
 
             }
             return View(departmentVM);
-        }
-        //dfsfasfdf
-        public IActionResult Delete(int? id)
+        }     
+        public async Task<IActionResult> Delete(int? id)
         {
-            return Details(id, "Delete");
+            return await Details(id, "Delete");
         }
-        [HttpPost] 
-        public IActionResult Delete(DepartmentViewModel departmentVM, [FromRoute] int id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(DepartmentViewModel departmentVM, [FromRoute] int id)
         {
             if (id != departmentVM.Id)
                 return BadRequest();
@@ -105,7 +99,7 @@ namespace Demo.PL.Controllers
             {
                 var MappedDepartment = _mapper.Map<DepartmentViewModel, Department>(departmentVM);
                 _unitOfWork.DepartmentRepository.Delete(MappedDepartment);
-                _unitOfWork.Complete();
+                await _unitOfWork.CompleteAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -115,7 +109,7 @@ namespace Demo.PL.Controllers
 
 
             return View(departmentVM);
-            //Fix 
+             
         }
     }
 }

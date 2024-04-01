@@ -8,10 +8,10 @@ namespace Demo.BLL.Interfaces
 {
     public interface IGenericRepository<T>
     {
-        public IEnumerable<T> GetAll();
-        public T GetById(int id);
+        public Task<IEnumerable<T>> GetAllAsync();
+        public Task<T> GetByIdAsync(int id);
 
-        public void Add(T entity);
+        public Task AddAsync(T entity);
         public void Update(T entity);
         public void Delete(T entity);
     }
