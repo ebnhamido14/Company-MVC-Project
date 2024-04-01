@@ -13,7 +13,7 @@ namespace Demo.PL.Helper
             //Directory.GetCurrentDirectory()+"\\wwwroot\\Files\\Images"+ FolderName;
             string FolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Files", FolderName);
             //2 Get FileName And Make It Unique
-            string FileName = $"{Guid.NewGuid()}{File.FileName}";
+            string FileName = $"{File.FileName}";
 
             //3 Get FilePath=[FolderPath+FileName] 
             string FilePath = Path.Combine(FolderPath, FileName);
