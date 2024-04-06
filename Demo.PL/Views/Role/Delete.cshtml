@@ -1,0 +1,17 @@
+﻿@model RoleViewModel
+@{
+    ViewData["Title"] = "Delete";
+}
+<h1>Are you Sure You Want To Delete Employee @Model.Name </h1>
+<form asp-action="ConfirmDelete">
+    <div class="form-group">
+        <label class="col-form-label" asp-for="Id"></label>
+        <input readonly class="form-control" asp-for="Id" />
+    </div>
+    <div class="form-group">
+        <label class="col-form-label" asp-for="Name"></label>
+        <input readonly class="form-control" asp-for="Name" />
+    </div>
+    <input type="Submit" value="Delete" asp-route-id="@Model.Id" class="btn btn-danger" />
+    <a asp-action="Index" class="btn btn-light">Cancel</a>
+</form>

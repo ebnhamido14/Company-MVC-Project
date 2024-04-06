@@ -1,17 +1,17 @@
-﻿@model int
+﻿@model string
 <td>
-    <a asp-action="Details" asp-route-id="@Model">
+    <a asp-action="Details" class="text-info" asp-route-id="@Model">
         <i class="fas fa-eye"></i>
     </a>
 </td>
 <td>
-    <a asp-action="Edit" asp-route-id="@Model">
+    <a asp-action="Edit" class="text-warning" asp-route-id="@Model">
         <i class="fas fa-edit"></i>
     </a>
 </td>
 
 <td>
-    <a asp-action="Delete" asp-route-id="@Model">
+    <a asp-action="Delete" class="text-danger" asp-route-id="@Model">
         <i class="fas fa-trash"></i>
     </a>
 </td>

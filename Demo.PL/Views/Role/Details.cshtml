@@ -1,0 +1,20 @@
+﻿@model RoleViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>@Model.Name Details</h1>
+<br />
+
+<div class="form-group">
+    <label class="col-form-label" asp-for="Id"></label>
+    <input readonly class="form-control" asp-for="Id" />
+</div>
+<div class="form-group">
+    <label class="col-form-label" asp-for="Name"></label>
+    <input readonly class="form-control" asp-for="Name" />
+</div>
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary">Edit</a>
+<a asp-action="Index" class="btn btn-light">Back To List</a>
+
+
